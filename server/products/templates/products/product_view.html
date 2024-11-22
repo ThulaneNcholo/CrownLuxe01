@@ -1,0 +1,237 @@
+{% extends 'client/base.html' %}
+<!-- divider  -->
+{% load static %}
+<!-- divider  -->
+{% block content %}
+<style>
+  .item_image {
+    height: 600px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .bullet_point {
+    margin-right: 10px;
+    font-size: 22px;
+  }
+
+  .sub_images {
+    height: 200px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .rating_star {
+    font-size: 22px;
+  }
+</style>
+
+<section class="container mt-5 section_spacing">
+  <div class="row mb-5">
+    <div class="col-12 col-md-6 mb-5">
+      <img
+        src="{{product.cover_image.url}}"
+        class="item_image shadow-sm"
+        alt=""
+      />
+    </div>
+    <div class="col-12 col-md-6 mb-5">
+      <h3 class="header_heading mb-3 text-uppercase">{{product.name}}</h3>
+      <h5 class="fw-bold mb-5">R{{product.price}} ZAR</h5>
+
+      <!-- quantity btn  -->
+      <div
+        class="btn-group mb-5"
+        role="group"
+        aria-label="Basic outlined example"
+      >
+        <button
+          type="button"
+          class="btn btn-outline-dark rounded-0"
+          onclick="decreaseQty()"
+        >
+          <i class="bi bi-dash-lg"></i>
+        </button>
+        <button type="button" class="btn btn-outline-dark" disabled>
+          <p class="mb-0" id="quantity">1</p>
+        </button>
+        <button
+          type="button"
+          class="btn btn-outline-dark rounded-0"
+          onclick="increaseQty()"
+        >
+          <i class="bi bi-plus-lg"></i>
+        </button>
+      </div>
+
+      <form method="POST">
+        {%csrf_token%}
+        <input type="text" id="inputQty" name="inputQty" value="1" hidden />
+        <input type="text" id="userID" name="current_user" hidden />
+        <!-- Buy Buttons  -->
+        <button
+          type="submit"
+          class="btn btn-dark w-100 py-3 mb-5 rounded-0"
+          name="add_to_cart"
+        >
+          Add To Cart
+        </button>
+      </form>
+
+      <p>{{product.description}}</p>
+
+      <!-- Bullet Points  -->
+      {% for data in product_details %}
+      <div class="d-flex align-items-center">
+        <i class="bi bi-dot bullet_point"></i>
+        <p class="mb-0">
+          <span class="fw-bold">{{data.title}}</span> {{data.description}}
+        </p>
+      </div>
+      {% endfor %}
+      <!-- end bullet  -->
+    </div>
+  </div>
+
+  <!-- sub images start  -->
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div class="row">
+        <div class="col-6">
+          <img
+            src="{{product.image1.url}}"
+            alt=""
+            class="sub_images shadow-sm border-2 border-dark border"
+          />
+        </div>
+        <!-- end col item  -->
+        <div class="col-6">
+          <img
+            src="{{product.image2.url}}"
+            alt=""
+            class="sub_images shadow-sm"
+          />
+        </div>
+        <!-- end col item  -->
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= Reviews ======= -->
+<section class="container section_spacing">
+  <div class="row">
+    <div class="col-12 col-md-4 mb-5">
+      <div class="bg-light p-4 shadow-sm">
+        <div class="d-flex justify-content-center mb-3">
+          <i class="bi bi-star-fill rating_star"></i>
+          <i class="bi bi-star-fill rating_star"></i>
+          <i class="bi bi-star-fill rating_star"></i>
+          <i class="bi bi-star-fill rating_star"></i>
+          <i class="bi bi-star-fill rating_star"></i>
+        </div>
+
+        <center>
+          <p class="mb-3">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed id
+            numquam porro et atque itaque earum perspiciatis alias. Enim,
+            nesciunt?
+          </p>
+          <h5 class="fw-bold">Lorem, ipsum.</h5>
+        </center>
+      </div>
+    </div>
+    <!-- end col item  -->
+    <div class="col-12 col-md-4 mb-5">
+      <div class="bg-light p-4 shadow-sm">
+        <div class="d-flex justify-content-center mb-3">
+          <i class="bi bi-star-fill rating_star"></i>
+          <i class="bi bi-star-fill rating_star"></i>
+          <i class="bi bi-star-fill rating_star"></i>
+          <i class="bi bi-star-fill rating_star"></i>
+          <i class="bi bi-star-fill rating_star"></i>
+        </div>
+
+        <center>
+          <p class="mb-3">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed id
+            numquam porro et atque itaque earum perspiciatis alias. Enim,
+            nesciunt?
+          </p>
+          <h5 class="fw-bold">Lorem, ipsum.</h5>
+        </center>
+      </div>
+    </div>
+    <!-- end col item  -->
+    <div class="col-12 col-md-4 mb-5">
+      <div class="bg-light p-4 shadow-sm">
+        <div class="d-flex justify-content-center mb-3">
+          <i class="bi bi-star-fill rating_star"></i>
+          <i class="bi bi-star-fill rating_star"></i>
+          <i class="bi bi-star-fill rating_star"></i>
+          <i class="bi bi-star-fill rating_star"></i>
+          <i class="bi bi-star-fill rating_star"></i>
+        </div>
+
+        <center>
+          <p class="mb-3">
+            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed id
+            numquam porro et atque itaque earum perspiciatis alias. Enim,
+            nesciunt?
+          </p>
+          <h5 class="fw-bold">Lorem, ipsum.</h5>
+        </center>
+      </div>
+    </div>
+    <!-- end col item  -->
+  </div>
+</section>
+
+<!-- ======= Similar Products ======= -->
+<section class="container">
+  <h3 class="header_heading mb-4">YOU MAY ALSO LIKE</h3>
+
+  {% include 'partials/similar_products.html' %}
+</section>
+
+<div style="height: 100px; width: 100%"></div>
+
+<script>
+  // Check if a UUID exists in localStorage
+  let userUUID = localStorage.getItem("userUUID");
+  document.getElementById("userID").value = userUUID;
+
+  function increaseQty() {
+    // Get the current quantity as a number
+    let current_quantity = parseInt(
+      document.getElementById("quantity").innerText,
+      10
+    );
+
+    // Increase the quantity by 1
+    current_quantity += 1;
+
+    // Update the <p> element with the new quantity
+    document.getElementById("quantity").innerText = current_quantity;
+    document.getElementById("inputQty").value = current_quantity;
+  }
+
+  function decreaseQty() {
+    // Get the current quantity as a number
+    let current_quantity = parseInt(
+      document.getElementById("quantity").innerText,
+      10
+    );
+
+    // Decrease the quantity by 1 only if it's greater than 1
+    if (current_quantity > 1) {
+      current_quantity -= 1;
+    }
+
+    // Update the <p> element with the new quantity
+    document.getElementById("quantity").innerText = current_quantity;
+    document.getElementById("inputQty").value = current_quantity;
+  }
+</script>
+
+{% endblock %}

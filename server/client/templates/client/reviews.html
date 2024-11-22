@@ -1,0 +1,134 @@
+{% extends 'client/base.html' %}
+<!-- divider  -->
+{% load static %}
+<!-- divider  -->
+{% block content %}
+<style>
+  .rating_star {
+    font-size: 22px;
+  }
+</style>
+
+<section class="container">
+  <center>
+    <h4 class="header_heading mt-5">OUR REVIEWS</h4>
+    <button
+      class="btn btn-dark mt-4 px-5 rounded-0"
+      data-bs-toggle="modal"
+      data-bs-target="#exampleModal"
+    >
+      Add New
+    </button>
+  </center>
+
+  <!-- ======= Add Review Modal ======= -->
+  <div
+    class="modal fade"
+    id="exampleModal"
+    tabindex="-1"
+    aria-labelledby="exampleModalLabel"
+    aria-hidden="true"
+  >
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="exampleModalLabel">New Review</h5>
+          <button
+            type="button"
+            class="btn-close"
+            data-bs-dismiss="modal"
+            aria-label="Close"
+          ></button>
+        </div>
+        <div class="modal-body mb-5">
+          <form method="POST" autocomplete="off">
+            {% csrf_token %}
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control rounded-0"
+                id="floatingInput"
+                placeholder="First Name"
+                name="FirstName"
+                required
+              />
+              <label for="floatingInput">First Name</label>
+            </div>
+            <div class="form-floating mb-3">
+              <input
+                type="text"
+                class="form-control rounded-0"
+                id="floatingInput"
+                placeholder="Last Name"
+                name="LastName"
+                required
+              />
+              <label for="floatingInput">Last Name</label>
+            </div>
+            <div class="form-floating mb-3">
+              <textarea
+                class="form-control"
+                placeholder="Leave review her"
+                id="floatingTextarea2"
+                style="height: 150px"
+                name="review"
+                required
+              ></textarea>
+              <label for="floatingTextarea2">Review here</label>
+            </div>
+            <!-- rating select  -->
+            <select
+              class="form-select mb-3"
+              aria-label="Default select example"
+              required
+              name="rating"
+            >
+              <option selected>Select star rating</option>
+              <option value="1">One</option>
+              <option value="2">Two</option>
+              <option value="3">Three</option>
+              <option value="4">Four</option>
+              <option value="5">Five</option>
+            </select>
+
+            <center>
+              <button
+                type="submit"
+                name="submit_review"
+                class="btn btn-dark px-5 py-2 my-4 rounded-0"
+              >
+                Submit Review
+              </button>
+            </center>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- ======= All Reviews ======= -->
+  <section class="container section_spacing mt-5">
+    <div class="row">
+      {% for data in reviews %}
+      <div class="col-12 col-md-4 mb-5">
+        <div class="bg-light p-4 shadow-sm">
+          <div class="d-flex justify-content-center mb-3">
+            <i class="bi bi-star-fill rating_star text-warning"></i>
+            <i class="bi bi-star-fill rating_star text-warning"></i>
+            <i class="bi bi-star-fill rating_star text-warning"></i>
+            <i class="bi bi-star-fill rating_star text-warning"></i>
+            <i class="bi bi-star-fill rating_star text-warning"></i>
+          </div>
+
+          <center>
+            <p class="mb-3">{{data.Review}}</p>
+            <h5 class="fw-bold">{{data.FirstName}} {{data.LastName}}</h5>
+          </center>
+        </div>
+      </div>
+      {% endfor%}
+    </div>
+  </section>
+</section>
+
+{% endblock %}

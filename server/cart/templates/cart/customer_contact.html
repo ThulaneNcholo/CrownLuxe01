@@ -1,0 +1,126 @@
+{% extends 'client/base.html' %}
+<!-- divider  -->
+{% load static %}
+<!-- divider  -->
+{% block content %}
+
+<section class="container" style="margin-bottom: 150px">
+  <div class="row d-flex justify-content-center mt-4">
+    <div class="col-12 col-md-6">
+      <div>
+        <form method="POST" autocomplete="off">
+          {% csrf_token %}
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control rounded-0"
+              id="floatingInput"
+              placeholder="Total"
+              value="R{{total_price}}"
+              disabled
+              name="total"
+            />
+            <label for="floatingInput">Total</label>
+          </div>
+          <!-- end input  -->
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control rounded-0"
+              id="floatingInput"
+              placeholder="Full Name"
+              name="fullName"
+              required
+            />
+            <label for="floatingInput">Full Name</label>
+          </div>
+          <!-- end input  -->
+          <div class="form-floating mb-3">
+            <input
+              type="email"
+              class="form-control rounded-0"
+              id="floatingInput"
+              placeholder="name@example.com"
+              name="email"
+              required
+            />
+            <label for="floatingInput">Email address</label>
+          </div>
+          <!-- end input  -->
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control rounded-0"
+              id="floatingInput"
+              placeholder="Phone Number"
+              name="phoneNumber"
+              required
+            />
+            <label for="floatingInput">Phone Number</label>
+          </div>
+          <!-- end input  -->
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control rounded-0"
+              id="floatingInput"
+              placeholder="Street Address"
+              name="street"
+              required
+            />
+            <label for="floatingInput">Street Address</label>
+          </div>
+          <!-- end input  -->
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control rounded-0"
+              id="floatingInput"
+              placeholder="City"
+              name="city"
+              required
+            />
+            <label for="floatingInput">City</label>
+          </div>
+          <!-- end input  -->
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control rounded-0"
+              id="floatingInput"
+              placeholder="Province"
+              name="province"
+              required
+            />
+            <label for="floatingInput">Province</label>
+          </div>
+          <!-- end input  -->
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control rounded-0"
+              id="floatingInput"
+              placeholder="Postal Code"
+              name="postal_code"
+              required
+            />
+            <label for="floatingInput">Postal Code</label>
+          </div>
+          <!-- end input  -->
+
+          <center>
+            <button
+              name="submit_contact_details"
+              type="submit"
+              class="btn btn-dark rounded-0 w-50 py-3 mt-5"
+            >
+              Continue To Payment
+            </button>
+          </center>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

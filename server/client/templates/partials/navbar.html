@@ -1,0 +1,49 @@
+<section class="container pt-5 pb-3">
+  <div class="d-flex justify-content-end mb-4">
+    <form method="POST">
+      {% csrf_token %}
+      <input type="text" id="user_uuid" name="user_UUID" hidden />
+      <button
+        type="submit"
+        name="submit_user_uuid"
+        class="btn position-relative border-0 p-0"
+      >
+        <i class="bi bi-bag cart_icon"></i>
+        <!-- <span
+          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+        >
+          0+
+        </span> -->
+      </button>
+    </form>
+  </div>
+
+  <div>
+    <center>
+      <a href="{% url 'index'%}">
+        <h1 class="header_heading navbar_heading">Crown Luxe</h1>
+      </a>
+    </center>
+  </div>
+
+  <div class="d-flex justify-content-center mt-5">
+    <a href="{% url 'index' %}">
+      <h6 class="nav_links">HOME</h6>
+    </a>
+    <a href="{% url 'products' %}">
+      <h6 class="nav_links">PRODUCTS</h6>
+    </a>
+    <a href="{% url 'our-reviews'%}">
+      <h6 class="nav_links">REVIEWS</h6>
+    </a>
+    <a href="{% url 'contact-us' %}">
+      <h6 class="nav_links">CONTACT</h6>
+    </a>
+  </div>
+</section>
+
+<script>
+  // Check if a UUID exists in localStorage
+  let current_user_uuid = localStorage.getItem("userUUID");
+  document.getElementById("user_uuid").value = current_user_uuid;
+</script>

@@ -1,0 +1,38 @@
+{% extends 'client/base.html' %}
+<!-- divider  -->
+{% load static %}
+<!-- divider  -->
+{% block content %}
+<style>
+  /* Best Seller Style  */
+  .best_seller_image {
+    height: 380px;
+    width: 100%;
+    object-fit: cover;
+  }
+</style>
+
+<section class="container mt-5">
+  <div class="row">
+    {% for data in products %}
+    <div class="col-12 col-md-4 col-lg-3 mb-5">
+      <div>
+        <img
+          src="{{data.cover_image.url}}"
+          class="best_seller_image mb-3 shadow"
+        />
+        <h6 class="text-uppercase">{{data.name}}</h6>
+        <p class="text-secondary">{{data.product_catalog.title}}</p>
+        <p class="mb-3 fw-bold">R{{data.price}} ZAR</p>
+        <a href="{% url 'view-product' data.id %}">
+          <button type="button" class="btn btn-dark rounded-0">VIEW</button>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<div style="height: 100px; width: 100%"></div>
+
+{% endblock %}

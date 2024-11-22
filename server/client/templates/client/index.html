@@ -1,0 +1,838 @@
+{% extends 'client/base.html' %}
+<!-- divider  -->
+{% load static %}
+<!-- divider  -->
+{% block content %}
+<style>
+  .hero_image {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+      url('{% static "images/cover_image01.jpg" %}');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 90vh;
+    width: 100%;
+  }
+
+  .hero_title {
+    color: white;
+  }
+
+  /* Sub Hero Section style  */
+  .catalog_image {
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 500px;
+    width: 100%;
+    background-color: #969b9e5f;
+  }
+
+  /* Best Seller Style  */
+  .best_seller_image {
+    height: 380px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /* Quality and Luxe Style  */
+  .quality_image {
+    height: 500px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /* Service Style  */
+  .service_icon {
+    font-size: 70px;
+  }
+
+  /* Products style  */
+  .product_image {
+    height: 400px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /* Reviews section  */
+  .carousel-item {
+    padding-top: 100px;
+    padding-bottom: 100px;
+  }
+
+  /* Sale Product  */
+  .product_sale_image {
+    height: 500px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /* Banner Style  */
+  .banner_image {
+    background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+      url('{% static "images/banner_03.png" %}');
+    background-size: cover;
+    background-repeat: no-repeat;
+    padding-top: 200px;
+    padding-bottom: 200px;
+    width: 100%;
+  }
+
+  /* Footer style  */
+  .footer_images {
+    height: 300px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  /* // Small devices (landscape phones, 576px and up)  */
+  @media (max-width: 768px) {
+    .hero_image {
+      background-image: linear-gradient(rgba(0, 0, 0, 0.2), rgba(0, 0, 0, 0.2)),
+        url('{% static "images/mobile_hero_image.png" %}');
+      background-size: cover;
+      background-repeat: no-repeat;
+      height: 70vh;
+      width: 100%;
+    }
+
+    .catalog_image {
+      height: 300px;
+    }
+
+    .best_seller_image {
+      height: 200px;
+      width: 100%;
+      object-fit: cover;
+    }
+
+    .service_icon {
+      font-size: 50px;
+    }
+
+    .footer_images {
+      height: 150px;
+      width: 100%;
+      object-fit: cover;
+    }
+  }
+</style>
+
+<!-- ======= Hero Section  ======= -->
+<section
+  class="hero_image d-flex justify-content-center align-items-center mb-5"
+>
+  <div class="overflow_content">
+    <center>
+      <h1
+        class="header_heading hero_title mb-5 text-uppercase"
+        data-aos="fade-left"
+        data-aos-delay="50"
+        data-aos-duration="1000"
+      >
+        Crown Your Beauty with Premium Hair
+      </h1>
+      <a href="{% url 'products' %}">
+        <button
+          type="button"
+          class="btn btn-light rounded-0 px-5 py-3"
+          data-aos="fade-left"
+          data-aos-delay="50"
+          data-aos-duration="1000"
+        >
+          Shop All
+        </button>
+      </a>
+    </center>
+  </div>
+</section>
+
+<!-- ======= Catalog  ======= -->
+<section class="container section_spacing">
+  <div class="row overflow_content">
+    {% for data in catalog %}
+    <div
+      class="col-12 col-md-4 mb-4"
+      data-aos="fade-up"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+    >
+      <div
+        class="catalog_image d-flex justify-content-center align-items-end shadow"
+        style="background-image: linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.2)), url({{data.catalog_image.url}});"
+      >
+        <a href="{% url 'catalog-list' data.id %}">
+          <button class="btn btn-light rounded-0 px-5 mb-3">
+            {{data.title}}
+          </button>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+    <!-- end item  -->
+  </div>
+</section>
+
+<!-- ======= Best Sellers ======= -->
+<section class="container section_spacing">
+  <center class="mb-5 overflow_content">
+    <h1
+      class="header_heading text-black mb-3"
+      data-aos="fade-right"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+    >
+      SHOP BEST SELLERS
+    </h1>
+    <h6
+      class="text-black mb-3"
+      data-aos="fade-right"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+    >
+      SO GOOD YOU'LL BE BACK FOR MORE
+    </h6>
+  </center>
+  <div class="row overflow_content">
+    {% for data in best_selling %}
+    <div
+      class="col-6 col-lg-3 mb-5"
+      data-aos="fade-up"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+    >
+      <div>
+        <img
+          src="{{data.cover_image.url}}"
+          class="best_seller_image mb-3 shadow"
+        />
+        <h6 class="text-uppercase">{{data.name}}</h6>
+        <p class="mb-3 fw-bold">R{{data.price}} ZAR</p>
+        <a href="{% url 'view-product' data.id %}">
+          <button type="button" class="btn btn-dark rounded-0">VIEW</button>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<!-- ======= Quality And Luxury ======= -->
+<section class="container section_spacing">
+  <div class="row">
+    <div class="col-12 col-md-6 mb-4 order-md-2 overflow_content">
+      <h1
+        class="header_heading mb-4"
+        data-aos="fade-left"
+        data-aos-delay="50"
+        data-aos-duration="1000"
+      >
+        QUALITY & LUXURY
+      </h1>
+      <p data-aos="fade-left" data-aos-delay="50" data-aos-duration="1000">
+        At <span class="fw-bold">Crown Luxe</span> , we redefine elegance with
+        premium-quality hair products that celebrate individuality and style.
+        Our mission is to empower you to look and feel your best by offering a
+        curated selection of luxurious wigs, weaves, and extensions tailored to
+        perfection.
+      </p>
+      <p
+        class="mb-4"
+        data-aos="fade-left"
+        data-aos-delay="50"
+        data-aos-duration="1000"
+      >
+        Step into a world where beauty meets sophistication, and every strand
+        tells a story of excellence.
+      </p>
+      <a href="{% url 'contact-us' %}">
+        <button
+          type="button"
+          class="btn btn-outline-dark rounded-0 px-5"
+          data-aos="fade-left"
+          data-aos-delay="50"
+          data-aos-duration="1000"
+        >
+          More About Us
+        </button>
+      </a>
+    </div>
+    <div class="col-12 col-md-6 mb-4 order-md-1 overflow_content">
+      <img
+        src="{% static '/images/quality_section.jpg' %}"
+        class="quality_image"
+        data-aos="fade-right"
+        data-aos-delay="50"
+        data-aos-duration="1000"
+      />
+    </div>
+  </div>
+</section>
+
+<!-- ======= Service ======= -->
+<section class="container section_spacing">
+  <div class="row overflow_content">
+    <div
+      class="col-12 col-md-4 mb-4"
+      data-aos="fade-up"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+    >
+      <div>
+        <center>
+          <i class="bi bi-gear-fill service_icon"></i>
+          <h4 class="header_heading mb-3 fw-bold">SERVICE</h4>
+          <p>
+            We pride ourselves on providing unparalleled customer service. From
+            personalized consultations to expert styling advice, our team is
+            dedicated to ensuring your experience is seamless and rewarding.
+            Whether you’re searching for the perfect wig or a transformative
+            weave, we’re here to guide you every step of the way.
+          </p>
+        </center>
+      </div>
+    </div>
+    <!-- end item  -->
+    <div
+      class="col-12 col-md-4 mb-4"
+      data-aos="fade-up"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+    >
+      <div>
+        <center>
+          <i class="bi bi-patch-check-fill service_icon"></i>
+          <h4 class="header_heading mb-3 fw-bold">QUALITY</h4>
+          <p>
+            At <span class="fw-bold">Crown Luxe</span>, quality is our promise.
+            We source only the finest 100% virgin human hair to ensure
+            durability, softness, and a natural finish. Each product undergoes
+            rigorous quality checks, ensuring you receive nothing but the best.
+            When you choose <span class="fw-bold">Crown Luxe</span>, you choose
+            hair that looks and feels flawless.
+          </p>
+        </center>
+      </div>
+    </div>
+    <!-- end item  -->
+    <div
+      class="col-12 col-md-4 mb-4"
+      data-aos="fade-up"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+    >
+      <div>
+        <center>
+          <i class="bi bi-person-fill-check service_icon"></i>
+          <h4 class="header_heading mb-3 fw-bold text-uppercase">Experience</h4>
+          <p>
+            With years of expertise in the hair industry,
+            <span class="fw-bold">Crown Luxe</span> has become a trusted name
+            for clients who demand excellence. Our commitment to innovation and
+            attention to detail guarantees an unmatched shopping experience.
+            From seasoned stylists to first-time buyers, we ensure that everyone
+            finds their perfect match.
+          </p>
+        </center>
+      </div>
+    </div>
+    <!-- end item  -->
+  </div>
+</section>
+
+<!-- ======= All Products ======= -->
+<section class="container mb-5">
+  <div class="row overflow_content">
+    <div
+      class="col-12 col-md-6 col-lg-3 mb-4"
+      data-aos="fade-right"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+    >
+      <div>
+        <img
+          src="{% static '/images/products_01.png' %}"
+          class="product_image shadow-sm"
+        />
+      </div>
+    </div>
+    <!-- end item  -->
+    <div
+      class="col-12 col-md-6 col-lg-3 mb-4"
+      data-aos="fade-right"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+    >
+      <div>
+        <img
+          src="{% static '/images/best_sellers.jpg' %}"
+          class="product_image shadow-sm"
+        />
+      </div>
+    </div>
+    <!-- end item  -->
+    <div
+      class="col-12 col-md-6 col-lg-3 mb-4"
+      data-aos="fade-right"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+    >
+      <div>
+        <h3 class="header_heading mb-3">CROWN LUXE PRODUCTS</h3>
+        <p class="mb-4">
+          Explore our premium wigs, weaves, and extensions. Designed for style,
+          crafted for perfection – beauty begins with
+          <span class="fw-bold">Crown Luxe</span>.
+        </p>
+        <a href="{% url 'products' %}">
+          <button type="button" class="btn btn-outline-dark rounded-0 px-5">
+            Shop All
+          </button>
+        </a>
+      </div>
+    </div>
+    <!-- end item  -->
+    <div
+      class="col-12 col-md-6 col-lg-3 mb-4"
+      data-aos="fade-right"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+    >
+      <div>
+        <img
+          src="{% static '/images/sub_hero01.jpg' %}"
+          class="product_image shadow-sm"
+        />
+      </div>
+    </div>
+    <!-- end item  -->
+  </div>
+</section>
+
+<!-- ======= Sale Banner ======= -->
+<a href="{% url 'products' %}">
+  <section
+    class="sale_cover bg-dark py-3 d-flex justify-content-around section_spacing"
+  >
+    <div class="d-flex">
+      <h6 class="text-white header_heading mb-0 px-3">NEW SALE</h6>
+      <i class="bi bi-star-fill text-white"></i>
+    </div>
+    <!-- end item  -->
+    <div class="d-flex">
+      <h6 class="text-white header_heading mb-0 px-3">NEW SALE</h6>
+      <i class="bi bi-star-fill text-white"></i>
+    </div>
+    <!-- end item  -->
+    <div class="d-flex d-none d-md-block">
+      <h6 class="text-white header_heading mb-0 px-3">NEW SALE</h6>
+      <i class="bi bi-star-fill text-white"></i>
+    </div>
+    <!-- end item  -->
+    <div class="d-flex d-none d-md-block">
+      <h6 class="text-white header_heading mb-0 px-3">NEW SALE</h6>
+      <i class="bi bi-star-fill text-white"></i>
+    </div>
+    <!-- end item  -->
+    <div class="d-flex d-none d-md-block">
+      <h6 class="text-white header_heading mb-0 px-3">NEW SALE</h6>
+      <i class="bi bi-star-fill text-white"></i>
+    </div>
+    <!-- end item  -->
+  </section>
+</a>
+
+<!-- ======= Reviews ======= -->
+<section class="container section_spacing">
+  <center>
+    <h1 class="header_heading mb-5">WHAT CUSTOMERS LOVE TODAY</h1>
+  </center>
+  <div
+    id="carouselExampleDark"
+    class="carousel carousel-dark slide"
+    data-bs-ride="carousel"
+  >
+    <div class="carousel-indicators">
+      <button
+        type="button"
+        data-bs-target="#carouselExampleDark"
+        data-bs-slide-to="0"
+        class="active"
+        aria-current="true"
+        aria-label="Slide 1"
+      ></button>
+      <button
+        type="button"
+        data-bs-target="#carouselExampleDark"
+        data-bs-slide-to="1"
+        aria-label="Slide 2"
+      ></button>
+      <button
+        type="button"
+        data-bs-target="#carouselExampleDark"
+        data-bs-slide-to="2"
+        aria-label="Slide 3"
+      ></button>
+    </div>
+    <div class="carousel-inner px-5 pb-4">
+      <div class="carousel-item active" data-bs-interval="10000">
+        <div class="carousel-caption">
+          <p>
+            " I absolutely love the Velvet Luxe Seamless Clip-In Extensions! The
+            quality is unmatched, and they blend perfectly with my natural hair.
+            I've received so many compliments since I started wearing them.
+            Totally worth the investment "
+          </p>
+        </div>
+      </div>
+      <div class="carousel-item" data-bs-interval="2000">
+        <div class="carousel-caption">
+          <p>
+            " The Majestic Royal Curls 360 Lace Wig is stunning! The curls are
+            so bouncy and full, and the lace blends seamlessly. I only gave it 4
+            stars because I wish the wig cap was slightly more breathable, but
+            overall, it's a fantastic purchase "
+          </p>
+        </div>
+      </div>
+      <div class="carousel-item">
+        <div class="carousel-caption">
+          <p>
+            " I bought the Opulent Brazilian Body Wave Weave, and I am in love!
+            It's soft, doesn't tangle, and holds curls beautifully. I've worn it
+            for a month now, and it still looks brand new. Highly recommend it
+            to anyone looking for luxury hair. "
+          </p>
+        </div>
+      </div>
+    </div>
+    <button
+      class="carousel-control-prev"
+      type="button"
+      data-bs-target="#carouselExampleDark"
+      data-bs-slide="prev"
+    >
+      <span class="carousel-control-prev-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Previous</span>
+    </button>
+    <button
+      class="carousel-control-next"
+      type="button"
+      data-bs-target="#carouselExampleDark"
+      data-bs-slide="next"
+    >
+      <span class="carousel-control-next-icon" aria-hidden="true"></span>
+      <span class="visually-hidden">Next</span>
+    </button>
+  </div>
+</section>
+
+<!-- ======= Sale Product ======= -->
+<section class="container section_spacing">
+  <div class="row">
+    <div class="col-12 col-md-6 mb-4 overflow_content">
+      <div>
+        <img
+          src="{{product_item.cover_image.url}}"
+          alt=""
+          class="product_sale_image"
+          data-aos="fade-up"
+          data-aos-delay="50"
+          data-aos-duration="1000"
+        />
+      </div>
+    </div>
+    <div class="col-12 col-md-6 mb-4">
+      <div class="overflow_content">
+        <h4
+          class="header_heading text-uppercase"
+          data-aos="fade-up"
+          data-aos-delay="50"
+          data-aos-duration="1000"
+        >
+          {{product_item.name}}
+        </h4>
+        <p
+          class="text-secondary"
+          data-aos="fade-up"
+          data-aos-delay="50"
+          data-aos-duration="1000"
+        >
+          {{product_item.product_catalog.title}}
+        </p>
+        <h6
+          class="mb-5"
+          data-aos="fade-up"
+          data-aos-delay="50"
+          data-aos-duration="1000"
+        >
+          R{{product_item.price}} ZAR
+        </h6>
+        <form method="POST">
+          {% csrf_token %}
+          <input
+            type="text"
+            name="product_id"
+            value="{{product_item.id}}"
+            hidden
+          />
+          <input
+            type="text"
+            id="current_user_localStoreage"
+            name="user_ID"
+            hidden
+          />
+          <button
+            type="submit"
+            name="submit_product_item"
+            class="btn btn-outline-dark rounded-0 w-100 py-3 border-2"
+            data-aos="fade-up"
+            data-aos-delay="50"
+            data-aos-duration="900"
+          >
+            Add To Cart
+          </button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= Banner O1 ======= -->
+<section class="banner_image section_spacing">
+  <div class="container overflow_content">
+    <center>
+      <h1
+        class="header_heading text-white mb-3"
+        data-aos="fade-right"
+        data-aos-delay="50"
+        data-aos-duration="1000"
+      >
+        LIMITED EDITION
+      </h1>
+      <p
+        class="text-white mb-4"
+        data-aos="fade-right"
+        data-aos-delay="50"
+        data-aos-duration="1000"
+      >
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, magnam.
+      </p>
+      <a href="{% url 'products' %}">
+        <button
+          type="button"
+          class="btn btn-outline-light rounded-0 px-5 py-3"
+          data-aos="fade-right"
+          data-aos-delay="50"
+          data-aos-duration="1000"
+        >
+          Shop Now
+        </button>
+      </a>
+    </center>
+  </div>
+</section>
+
+<!-- ======= Contact ======= -->
+<section class="container section_spacing">
+  <center>
+    <div class="overflow_content">
+      <h1
+        class="header_heading"
+        data-aos="fade-up"
+        data-aos-delay="50"
+        data-aos-duration="1000"
+      >
+        LETS STAY IN TOUCH
+      </h1>
+      <p
+        class="text-secondary"
+        data-aos="fade-up"
+        data-aos-delay="50"
+        data-aos-duration="1000"
+      >
+        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum,
+        inventore.
+      </p>
+    </div>
+  </center>
+  <div class="row d-flex justify-content-center mt-4">
+    <div class="col-12 col-md-6">
+      <div>
+        <form class="overflow_content">
+          <div
+            class="form-floating mb-3"
+            data-aos="fade-up"
+            data-aos-delay="50"
+            data-aos-duration="1000"
+          >
+            <input
+              type="text"
+              class="form-control rounded-0"
+              id="floatingInput"
+              placeholder="Full Name"
+            />
+            <label for="floatingInput">Full Name</label>
+          </div>
+          <!-- end input  -->
+          <div
+            class="form-floating mb-3"
+            data-aos="fade-up"
+            data-aos-delay="50"
+            data-aos-duration="1000"
+          >
+            <input
+              type="email"
+              class="form-control rounded-0"
+              id="floatingInput"
+              placeholder="name@example.com"
+            />
+            <label for="floatingInput">Email address</label>
+          </div>
+          <!-- end input  -->
+          <div
+            class="form-floating"
+            data-aos="fade-up"
+            data-aos-delay="50"
+            data-aos-duration="1000"
+          >
+            <textarea
+              class="form-control rounded-0"
+              placeholder="Leave a comment here"
+              id="floatingTextarea2"
+              style="height: 100px"
+            ></textarea>
+            <label for="floatingTextarea2">Message</label>
+          </div>
+
+          <!-- Submit  -->
+          <div
+            class="row mt-3"
+            data-aos="fade-up"
+            data-aos-delay="50"
+            data-aos-duration="1000"
+          >
+            <div class="col-6">
+              <button type="button" class="btn btn-dark rounded-0 w-100 py-3">
+                Send Message
+              </button>
+            </div>
+            <div class="col-6">
+              <a href="{% url 'contact-us' %}">
+                <button
+                  type="button"
+                  class="btn btn-outline-dark rounded-0 w-100 py-3"
+                >
+                  Contact Us
+                </button>
+              </a>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ======= Image Banner ======= -->
+<section class="container-fluid mb-5">
+  <div class="row overflow_content">
+    <div
+      class="col-4 col-md-3 col-lg-2 mb-1"
+      data-aos="fade-up"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+    >
+      <div>
+        <img
+          src="{% static '/images/footer_image_01.jpg' %}"
+          class="footer_images shadow-sm"
+          alt=""
+        />
+      </div>
+    </div>
+    <!-- end col  -->
+    <div
+      class="col-4 col-md-3 col-lg-2 mb-1"
+      data-aos="fade-up"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+    >
+      <div>
+        <img
+          src="{% static '/images/footer_image_02.jpg' %}"
+          class="footer_images shadow-sm"
+          alt=""
+        />
+      </div>
+    </div>
+    <!-- end col  -->
+    <div
+      class="col-4 col-md-3 col-lg-2 mb-1"
+      data-aos="fade-up"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+    >
+      <div>
+        <img
+          src="{% static '/images/footer_image_03.jpg' %}"
+          class="footer_images shadow-sm"
+          alt=""
+        />
+      </div>
+    </div>
+    <!-- end col  -->
+    <div
+      class="col-4 col-md-3 col-lg-2 mb-1"
+      data-aos="fade-up"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+    >
+      <div>
+        <img
+          src="{% static '/images/footer_image_04.jpg' %}"
+          class="footer_images shadow-sm"
+          alt=""
+        />
+      </div>
+    </div>
+    <!-- end col  -->
+    <div
+      class="col-4 col-md-3 col-lg-2 mb-1"
+      data-aos="fade-up"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+    >
+      <div>
+        <img
+          src="{% static '/images/footer_image_05.jpg' %}"
+          class="footer_images shadow-sm"
+          alt=""
+        />
+      </div>
+    </div>
+    <!-- end col  -->
+    <div
+      class="col-4 col-md-3 col-lg-2 mb-1"
+      data-aos="fade-up"
+      data-aos-delay="50"
+      data-aos-duration="1000"
+    >
+      <div>
+        <img
+          src="{% static '/images/footer_image_06.jpg' %}"
+          class="footer_images shadow-sm"
+          alt=""
+        />
+      </div>
+    </div>
+    <!-- end col  -->
+  </div>
+</section>
+
+<script>
+  // Check if a UUID exists in localStorage
+  let localStorage_user_uuid = localStorage.getItem("userUUID");
+  document.getElementById("current_user_localStoreage").value =
+    localStorage_user_uuid;
+</script>
+
+{% endblock %}

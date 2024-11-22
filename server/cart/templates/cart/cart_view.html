@@ -1,0 +1,100 @@
+{% extends 'client/base.html' %}
+<!-- divider  -->
+{% load static %}
+<!-- divider  -->
+{% block content %}
+<style>
+  .cart_image {
+    height: 150px;
+    width: 100%;
+    object-fit: cover;
+  }
+
+  .cart_title {
+    font-weight: 600;
+  }
+</style>
+<section class="container section_spacing mt-5">
+  <div class="row">
+    {% for data in currentUser_items %}
+    <div class="col-12 col-md-6">
+      <div>
+        <div class="row">
+          <div class="col-4">
+            <img
+              src="{{data.product.cover_image.url}}"
+              alt=""
+              class="cart_image"
+            />
+          </div>
+          <div class="col">
+            <h6 class="header_heading cart_title text-uppercase">
+              {{data.product.name}}
+            </h6>
+            <p class="text-secondary mb-3">
+              {{data.product.product_catalog.title}}
+            </p>
+            <h5 class="fw-bold mb-3">R{{data.total}} ZAR</h5>
+
+            <!-- quantity btn  -->
+            <form method="POST">
+              {% csrf_token %}
+              <input type="text" name="item_ID" value="{{data.id}}" hidden />
+              <div
+                class="btn-group mb-5"
+                role="group"
+                aria-label="Basic outlined example"
+              >
+                <button
+                  type="submit"
+                  class="btn btn-outline-dark rounded-0"
+                  name="decreaseQty"
+                >
+                  <i class="bi bi-dash-lg"></i>
+                </button>
+                <button type="button" class="btn btn-outline-dark" disabled>
+                  {{data.quantity}}
+                </button>
+                <button
+                  type="submit"
+                  class="btn btn-outline-dark rounded-0"
+                  name="IncreaseQty"
+                >
+                  <i class="bi bi-plus-lg"></i>
+                </button>
+              </div>
+            </form>
+          </div>
+        </div>
+      </div>
+    </div>
+    {% empty %}
+    <center>
+      <p>No Items In Cart</p>
+    </center>
+    {% endfor %}
+    <!-- end col item  -->
+  </div>
+
+  <!-- contact info btn page  -->
+  {% if currentUser_items %}
+  <div class="row mt-5">
+    <div class="col-12 col-md-6 mb-4">
+      <a href="{% url 'contact-details' current_user_uuid %}">
+        <button class="btn btn-dark rounded-0 py-3 w-100 shadow-sm">
+          Proceed To Checkout R{{total_price}}
+        </button>
+      </a>
+    </div>
+    <div class="col-12 col-md-6 mb-4">
+      <a href="{% url 'products' %}">
+        <button class="btn btn-outline-dark rounded-0 py-3 w-100 shadow-sm">
+          Continue Shopping
+        </button>
+      </a>
+    </div>
+  </div>
+  {% endif %}
+</section>
+
+{% endblock %}

@@ -1,0 +1,182 @@
+{% extends 'client/base.html' %}
+<!-- divider  -->
+{% load static %}
+<!-- divider  -->
+{% block content %}
+<style>
+  .contact_cover {
+    background-image: linear-gradient(rgba(0, 0, 0, 0), rgba(0, 0, 0, 0)),
+      url('{% static "images/contact_cover.png" %}');
+    background-size: cover;
+    background-repeat: no-repeat;
+    height: 70vh;
+    width: 100%;
+  }
+
+  .contact_icon {
+    font-size: 20px;
+    margin-right: 15px;
+  }
+
+  .about_image {
+    height: 500px;
+    width: 100%;
+    object-fit: cover;
+  }
+</style>
+
+<!-- ======= Cover Image ======= -->
+<section class="contact_cover section_spacing"></section>
+
+<!-- ======= Contacts and Contact Form ======= -->
+<section class="container mb-5">
+  <center style="margin-bottom: 100px">
+    <h1 class="header_heading text-uppercase">Get In Touch With Us</h1>
+    <p>
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga laudantium
+      voluptatum, tempore voluptatem blanditiis laborum.
+    </p>
+  </center>
+  <div class="row">
+    <div class="col-12 col-md-6 mb-5">
+      <div>
+        <form>
+          <div class="form-floating mb-3">
+            <input
+              type="text"
+              class="form-control rounded-0"
+              id="floatingInput"
+              placeholder="Full Name"
+            />
+            <label for="floatingInput">Full Name</label>
+          </div>
+          <!-- end input  -->
+          <div class="form-floating mb-3">
+            <input
+              type="email"
+              class="form-control rounded-0"
+              id="floatingInput"
+              placeholder="name@example.com"
+            />
+            <label for="floatingInput">Email address</label>
+          </div>
+          <!-- end input  -->
+          <div class="form-floating">
+            <textarea
+              class="form-control rounded-0"
+              placeholder="Leave a comment here"
+              id="floatingTextarea2"
+              style="height: 100px"
+            ></textarea>
+            <label for="floatingTextarea2">Message</label>
+          </div>
+
+          <!-- Submit  -->
+          <div class="row mt-3">
+            <div class="col-6">
+              <button type="button" class="btn btn-dark rounded-0 w-100 py-3">
+                Send Message
+              </button>
+            </div>
+          </div>
+        </form>
+      </div>
+    </div>
+    <div class="col-12 col-md-6 mb-5">
+      <div class="d-flex align-items-center mb-3">
+        <i class="bi bi-telephone-fill contact_icon"></i>
+        <p class="mb-0">011 938 7383</p>
+      </div>
+      <!-- end contact  -->
+      <div class="d-flex align-items-center mb-3">
+        <i class="bi bi-telephone-fill contact_icon"></i>
+        <p class="mb-0">011 938 7383</p>
+      </div>
+      <!-- end contact  -->
+      <div class="d-flex align-items-center mb-3">
+        <i class="bi bi-envelope-fill contact_icon"></i>
+        <p class="mb-0">lwazi@branditco.co.za</p>
+      </div>
+      <!-- end contact  -->
+      <div class="d-flex align-items-center mb-3">
+        <i class="bi bi-geo-alt-fill contact_icon"></i>
+        <p class="mb-0">12 lorem street, Lorem ipsum, dolor sit, 2637</p>
+      </div>
+      <!-- end contact  -->
+    </div>
+  </div>
+</section>
+
+<!-- ======= Sale Banner ======= -->
+<a href="{% url 'products' %}">
+  <section
+    class="sale_cover bg-dark py-3 d-flex justify-content-around section_spacing"
+  >
+    <div class="d-flex">
+      <h6 class="text-white header_heading mb-0 px-3">NEW SALE</h6>
+      <i class="bi bi-star-fill text-white"></i>
+    </div>
+    <!-- end item  -->
+    <div class="d-flex">
+      <h6 class="text-white header_heading mb-0 px-3">NEW SALE</h6>
+      <i class="bi bi-star-fill text-white"></i>
+    </div>
+    <!-- end item  -->
+    <div class="d-flex d-none d-md-block">
+      <h6 class="text-white header_heading mb-0 px-3">NEW SALE</h6>
+      <i class="bi bi-star-fill text-white"></i>
+    </div>
+    <!-- end item  -->
+    <div class="d-flex d-none d-md-block">
+      <h6 class="text-white header_heading mb-0 px-3">NEW SALE</h6>
+      <i class="bi bi-star-fill text-white"></i>
+    </div>
+    <!-- end item  -->
+    <div class="d-flex d-none d-md-block">
+      <h6 class="text-white header_heading mb-0 px-3">NEW SALE</h6>
+      <i class="bi bi-star-fill text-white"></i>
+    </div>
+    <!-- end item  -->
+  </section>
+</a>
+
+<section class="container section_spacing">
+  <center>
+    <h1 class="header_heading text-uppercase">A LITTLE ABOUT US</h1>
+    <p style="margin-bottom: 150px">
+      Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fuga laudantium
+      voluptatum, tempore voluptatem blanditiis laborum.
+    </p>
+  </center>
+
+  <div class="row">
+    <div class="col-12 col-md-6 mb-5">
+      <img
+        src="{% static '/images/products_01.png' %}"
+        alt=""
+        class="about_image"
+      />
+    </div>
+    <div class="col-12 col-md-6 mb-5">
+      <h3 class="header_heading">CROWN LUXE</h3>
+      <p>
+        At <span class="fw-bold">Crown Luxe</span>, we redefine elegance with
+        premium-quality hair products that celebrate individuality and style.
+        Our mission is to empower you to look and feel your best by offering a
+        curated selection of luxurious wigs, weaves, and extensions tailored to
+        perfection.
+      </p>
+      <p class="mb-4">
+        Step into a world where beauty meets sophistication, and every strand
+        tells a story of excellence.
+      </p>
+      <a href="{% url 'products' %}">
+        <button type="button" class="btn btn-dark rounded-0 px-5 py-3">
+          View All Products
+        </button>
+      </a>
+    </div>
+  </div>
+</section>
+
+{% endblock %}
