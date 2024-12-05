@@ -1,0 +1,363 @@
+{% extends 'client/base.html' %}
+<!-- divider  -->
+{% load static %}
+<!-- divider  -->
+{% block content %}
+<style>
+  .item_image {
+    height: 70px;
+    width: 70px;
+    object-fit: cover;
+    margin-right: 15px;
+  }
+
+  .order_image {
+    height: 100px;
+    width: 100%;
+    object-fit: cover;
+    border-radius: 20px;
+  }
+
+  .card_border {
+    border-radius: 15px;
+  }
+</style>
+
+<section class="container my-5">
+  {% for message in messages %}
+  <div class="alert alert-success my-5" role="alert">{{message}}</div>
+  {% endfor %}
+</section>
+
+<section class="container mt-5 mb-4">
+  <a href="{% url 'dashboard' %}">
+    <i class="bi bi-arrow-left-square-fill back_button"></i>
+  </a>
+</section>
+
+<section class="container my-5">
+  <div class="row d-flex align-items-center">
+    <div class="col">
+      <h4 class="fw-bold mb-0">Order</h4>
+    </div>
+    <div class="col d-flex justify-content-end">
+      <button
+        class="btn btn-success fw-bold rounded-pill shadow-sm"
+        data-bs-toggle="offcanvas"
+        data-bs-target="#updateOrder"
+        aria-controls="updateOrder"
+      >
+        Update order
+      </button>
+    </div>
+  </div>
+
+  <!-- update offcanvas  -->
+  <div
+    class="offcanvas offcanvas-end"
+    tabindex="-1"
+    id="updateOrder"
+    aria-labelledby="updateOrderLabel"
+  >
+    <div class="offcanvas-header">
+      <h5 class="offcanvas-title" id="updateOrderLabel">
+        Order - {{order.reference}}
+      </h5>
+      <button
+        type="button"
+        class="btn-close text-reset"
+        data-bs-dismiss="offcanvas"
+        aria-label="Close"
+      ></button>
+    </div>
+    <div class="offcanvas-body">
+      <p class="mb-5">
+        Please select order status and click update button to confirm.
+      </p>
+      <form class="mt-5" method="POST">
+        {% csrf_token %}
+        <!-- divider  -->
+        {% for status in order_status %}
+        <!-- divider  -->
+        {% if status.name == order.status %}
+        <div class="mb-3">
+          <input
+            type="radio"
+            class="btn-check py-3"
+            id="statusID{{status.id}}"
+            autocomplete="off"
+            value="{{status.name}}"
+            name="status_value"
+            checked
+          />
+          <label
+            class="btn btn-outline-dark shadow-sm border w-100 py-3 rounded-pill"
+            for="statusID{{status.id}}"
+            >{{status.name}}</label
+          >
+        </div>
+        {% else %}
+        <div class="mb-3">
+          <input
+            type="radio"
+            class="btn-check py-3"
+            id="statusID{{status.id}}"
+            autocomplete="off"
+            value="{{status.name}}"
+            name="status_value"
+          />
+          <label
+            class="btn btn-outline-dark shadow-sm border w-100 py-3 rounded-pill"
+            for="statusID{{status.id}}"
+            >{{status.name}}</label
+          >
+        </div>
+        {% endif %}
+        <!-- divider  -->
+        {% endfor %}
+        <button
+          type="submit"
+          name="confirm_update"
+          class="btn btn-success shadow-sm py-3 rounded-pill w-100 mt-5"
+        >
+          Confirm Update
+        </button>
+      </form>
+    </div>
+  </div>
+</section>
+
+<section class="container mt-5 d-block d-md-none">
+  {% for data in order_items %}
+  <div class="p-3 shadow-sm card_border mb-3">
+    <div class="row">
+      <div class="col-4">
+        <img
+          src="{{data.product.cover_image.url}}"
+          alt=""
+          class="order_image"
+        />
+      </div>
+      <div class="col">
+        <h6 class="fw-bold">{{data.product.name}}</h6>
+        <p class="mb-0">
+          <span class="badge bg-dark fw-bold" style="margin-right: 10px"
+            >{{data.quantity}}</span
+          >
+          Qty
+        </p>
+      </div>
+    </div>
+  </div>
+  {% endfor %}
+</section>
+
+<section class="container mt-2">
+  <div class="row">
+    <div class="col-12 col-md-6 col-lg order-md-2">
+      <div class="bg-light rounded p-3 shadow-sm h-100">
+        <div class="row d-flex align-items-center mb-5 d-none d-md-block">
+          <div class="col">
+            <h5 class="fw-bold mb-0">Items</h5>
+          </div>
+          <div class="col d-flex justify-content-end">
+            <h5 class="mb-0">
+              <span class="badge bg-danger fw-bold">{{total_qty}}</span>
+            </h5>
+          </div>
+        </div>
+
+        {% for data in order_items %}
+        <div class="d-none d-md-block">
+          <div
+            class="row rounded-3 p-3 mb-3 shadow-sm"
+            style="background-color: #e9ecef"
+          >
+            <div class="col-2">
+              <img
+                src="{{data.product.cover_image.url}}"
+                alt=""
+                class="item_image rounded-3 shadow-sm mb-3"
+              />
+            </div>
+            <div class="col">
+              <div class="row">
+                <div class="col mb-3">
+                  <p class="mb-0">{{data.product.name}}</p>
+                </div>
+                <div class="col">
+                  <p class="mb-0 fw-bold">{{data.quantity}} Qty</p>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        {% endfor %}
+        <!-- divider  -->
+        {% if order.status == "Order" %}
+        <div
+          class="row p-3 rounded-3 mt-5 mb-3 shadow-sm"
+          style="background-color: #2a3b8e"
+        >
+          <div class="col">
+            <h6 class="mb-0 text-white">Status</h6>
+          </div>
+          <div class="col">
+            <h5 class="fw-bold mb-0 text-white">Pending</h5>
+          </div>
+        </div>
+        {% elif order.status == "processing" %}
+        <div
+          class="row p-3 rounded-3 mt-5 mb-3 shadow-sm"
+          style="background-color: #d4af37"
+        >
+          <div class="col">
+            <h6 class="mb-0 text-white">Status</h6>
+          </div>
+          <div class="col">
+            <h5 class="fw-bold mb-0 text-white">{{order.status}}</h5>
+          </div>
+        </div>
+        {% elif order.status == "Complete" %}
+        <div
+          class="row p-3 rounded-3 mt-5 mb-3 shadow-sm"
+          style="background-color: #4caf50"
+        >
+          <div class="col">
+            <h6 class="mb-0 text-white">Status</h6>
+          </div>
+          <div class="col">
+            <h5 class="fw-bold mb-0 text-white">{{order.status}}</h5>
+          </div>
+        </div>
+        {% elif order.status == "returned" %}
+        <div
+          class="row p-3 rounded-3 mt-5 mb-3 shadow-sm"
+          style="background-color: #aa0000"
+        >
+          <div class="col">
+            <h6 class="mb-0 text-white">Status</h6>
+          </div>
+          <div class="col">
+            <h5 class="fw-bold mb-0 text-white">{{order.status}}</h5>
+          </div>
+        </div>
+        {% endif %}
+
+        <div class="row bg-dark p-3 rounded-3 mt-2 mb-3 shadow-sm">
+          <div class="col">
+            <h6 class="mb-0 text-white">Total</h6>
+          </div>
+          <div class="col">
+            <h5 class="fw-bold mb-0 text-white">R{{order.total}}</h5>
+          </div>
+        </div>
+      </div>
+    </div>
+    <!-- end main col  -->
+    <div class="col-12 col-md-6 col-lg-7 order-md-1">
+      <div class="bg-light rounded p-3 shadow-sm h-100">
+        <h5 class="mb-4 fw-bold">Customer Details</h5>
+        <div class="row">
+          <div class="col-12 col-md-6 mb-4">
+            <div>
+              <label class="form-label">Full Name</label>
+              <input
+                class="form-control rounded-3 border-0 py-3 shadow-sm"
+                disabled
+                value="{{order.full_name}}"
+              />
+            </div>
+          </div>
+          <!-- end col item  -->
+          <div class="col-12 col-md-6 mb-4">
+            <div>
+              <label class="form-label">Reference</label>
+              <input
+                class="form-control rounded-3 border-0 py-3 shadow-sm"
+                disabled
+                value="#{{order.reference}}"
+              />
+            </div>
+          </div>
+          <!-- end col item  -->
+          <div class="col-12 col-md-6 mb-4">
+            <div>
+              <label class="form-label">Phone Number</label>
+              <input
+                class="form-control rounded-3 border-0 py-3 shadow-sm"
+                disabled
+                value="{{order.phone_number}}"
+              />
+            </div>
+          </div>
+          <!-- end col item  -->
+          <div class="col-12 col-md-6 mb-4">
+            <div>
+              <label class="form-label">Email</label>
+              <input
+                class="form-control rounded-3 border-0 py-3 shadow-sm"
+                disabled
+                value="{{order.email}}"
+              />
+            </div>
+          </div>
+          <!-- end col item  -->
+        </div>
+
+        <h5 class="mb-4 fw-bold mt-5">Customer Address</h5>
+        <div class="row">
+          <div class="col-12 col-md-6 mb-4">
+            <div>
+              <label class="form-label">Street Address</label>
+              <input
+                class="form-control rounded-3 border-0 py-3 shadow-sm"
+                disabled
+                value="{{order.street}}"
+              />
+            </div>
+          </div>
+          <!-- end col item  -->
+          <div class="col-12 col-md-6 mb-4">
+            <div>
+              <label class="form-label">City</label>
+              <input
+                class="form-control rounded-3 border-0 py-3 shadow-sm"
+                disabled
+                value="{{order.city}}"
+              />
+            </div>
+          </div>
+          <!-- end col item  -->
+          <div class="col-12 col-md-6 mb-4">
+            <div>
+              <label class="form-label">Province</label>
+              <input
+                class="form-control rounded-3 border-0 py-3 shadow-sm"
+                disabled
+                value="{{order.city}}"
+              />
+            </div>
+          </div>
+          <!-- end col item  -->
+          <div class="col-12 col-md-6 mb-4">
+            <div>
+              <label class="form-label">Postal Code</label>
+              <input
+                class="form-control rounded-3 border-0 py-3 shadow-sm"
+                disabled
+                value="{{order.postal_code}}"
+              />
+            </div>
+          </div>
+          <!-- end col item  -->
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<div style="height: 150px; width: 100%"></div>
+
+{% endblock %}

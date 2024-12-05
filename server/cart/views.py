@@ -68,8 +68,10 @@ def CustomerContactView(request,id):
         create_order.province = request.POST.get('province')
         create_order.postal_code = request.POST.get('postal_code')
         create_order.total = total_price
-        create_order.status = "Order"
         create_order.save() 
+        # save user id to django session 
+        request.session['current_user'] = create_order.current_user 
+        request.session['current_order'] = create_order.id 
 
         # update many to many product field 
         for item in currentUser_items:
@@ -77,13 +79,9 @@ def CustomerContactView(request,id):
             create_order.customer_items.add(cart_item)
             create_order.save()
 
-
-        # Filter and bulk update the status to 'Order'
-        CartItemsModel.objects.filter(
-            Q(current_user=id) & Q(status="InCart")
-        ).update(status="Order") 
+        
             
-        return redirect("payment-successful", id)
+        return redirect("Payments-view", create_order.id)
 
     context = {
         "total_price" : total_price
@@ -91,5 +89,18 @@ def CustomerContactView(request,id):
 
     return render(request,'cart/customer_contact.html',context)
 
-def PaymentSuccessfulView(request,id):
+def PaymentSuccessfulView(request):
+    current_user_id = request.session.get('current_user')
+    current_order_id = request.session.get('current_order')
+    
+    # update customer order when payment is complete 
+    update_order = CustomerOrderModel.objects.get(id = current_order_id)
+    update_order.status = "Order"
+    update_order.save()
+
+    # Filter and bulk update the status to 'Order'
+    CartItemsModel.objects.filter(
+        Q(current_user=current_user_id) & Q(status="InCart")
+    ).update(status="Order") 
+
     return render(request,'cart/payment_success.html')

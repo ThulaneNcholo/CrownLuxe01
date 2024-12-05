@@ -29,6 +29,8 @@ class CustomerOrderModel(models.Model):
     ORDER_CHOICES = [
         ('Order', 'Order'),
         ('Purchased', 'Purchased'),
+        ('Pending', 'Pending'),
+        ('returned', 'returned'),
         ('Complete', 'Complete'),
         ('Delivered', 'Delivered'),
         ('Cancelled', 'Cancelled'),

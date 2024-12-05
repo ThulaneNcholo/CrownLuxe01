@@ -31,12 +31,15 @@ class ProductModel(models.Model):
     product_details = models.ManyToManyField(
         ProductDetailsModel, blank=True, default=None, related_name='product_details')
     cover_image = models.ImageField(
-        null=True, blank=True, upload_to='static/images')
+        null=True, blank=True, upload_to='static/images/items')
     image1 = models.ImageField(
-        null=True, blank=True, upload_to='static/images')
+        null=True, blank=True, upload_to='static/images/items')
     image2 = models.ImageField(
-        null=True, blank=True, upload_to='static/images')
+        null=True, blank=True, upload_to='static/images/items')
     date_created = models.DateTimeField(auto_now_add=True, null=True)
     
     def __str__(self):
         return self.name
+    
+
+    

@@ -1,0 +1,79 @@
+{% extends 'client/base.html' %}
+<!-- divider  -->
+{% load static %}
+<!-- divider  -->
+{% block content %}
+
+<style>
+  /* Best Seller Style  */
+  .best_seller_image {
+    height: 250px;
+    width: 100%;
+    object-fit: cover;
+  }
+</style>
+
+<section class="container my-5">
+  {% for message in messages %}
+  <div class="alert alert-success my-5" role="alert">{{message}}</div>
+  {% endfor %}
+</section>
+
+<section class="container mt-5">
+  <div class="row mb-5 d-flex align-items-center">
+    <div class="col">
+      <h3 class="header_heading">Products</h3>
+    </div>
+    <div class="col d-flex justify-content-end">
+      <a href="{% url 'new-product' %}">
+        <button class="btn btn-dark rounded-pill shadow">
+          <i class="bi bi-plus-circle-fill" style="margin-right: 10px"></i> Add
+          Product
+        </button>
+      </a>
+    </div>
+  </div>
+
+  <div class="row">
+    {% for data in products %}
+    <div class="col-12 col-md-4 col-lg-3 mb-5">
+      <div>
+        <img
+          src="{{data.cover_image.url}}"
+          class="best_seller_image mb-3 shadow"
+        />
+        <h6 class="text-uppercase">{{data.name}}</h6>
+        <p class="text-secondary">{{data.product_catalog.title}}</p>
+        <p class="mb-3 fw-bold">R{{data.price}} ZAR</p>
+        <a href="{% url 'product_edit' product_id=data.id %}">
+          <button type="button" class="btn btn-dark rounded-0">VIEW</button>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+<section class="container mt-5">
+  <h3 class="header_heading mb-4">Accessories</h3>
+  <div class="row">
+    {% for data in accessories %}
+    <div class="col-12 col-md-4 col-lg-3 mb-5">
+      <div>
+        <img
+          src="{{data.cover_image.url}}"
+          class="best_seller_image mb-3 shadow"
+        />
+        <h6 class="text-uppercase">{{data.name}}</h6>
+        <p class="text-secondary">{{data.product_catalog.title}}</p>
+        <p class="mb-3 fw-bold">R{{data.price}} ZAR</p>
+        <a href="{% url 'product_edit' product_id=data.id %}">
+          <button type="button" class="btn btn-dark rounded-0">VIEW</button>
+        </a>
+      </div>
+    </div>
+    {% endfor %}
+  </div>
+</section>
+
+{% endblock %}

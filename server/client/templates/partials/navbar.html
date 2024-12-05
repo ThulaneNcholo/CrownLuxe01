@@ -1,22 +1,36 @@
 <section class="container pt-5 pb-3">
-  <div class="d-flex justify-content-end mb-4">
-    <form method="POST">
-      {% csrf_token %}
-      <input type="text" id="user_uuid" name="user_UUID" hidden />
-      <button
-        type="submit"
-        name="submit_user_uuid"
-        class="btn position-relative border-0 p-0"
+  <div class="row mb-4">
+    <div class="col d-flex justify-content-start d-block d-lg-none">
+      <a
+        data-bs-toggle="offcanvas"
+        href="#offcanvasExample"
+        aria-controls="offcanvasExample"
       >
-        <i class="bi bi-bag cart_icon"></i>
-        <!-- <span
-          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+        <i class="bi bi-list cart_icon"></i>
+      </a>
+    </div>
+    <div class="col d-flex justify-content-end">
+      <form method="POST">
+        {% csrf_token %}
+        <input type="text" id="user_uuid" name="user_UUID" hidden />
+        <button
+          type="submit"
+          name="submit_user_uuid"
+          class="btn position-relative border-0 p-0"
         >
-          0+
-        </span> -->
-      </button>
-    </form>
+          <i class="bi bi-bag cart_icon"></i>
+          <!-- <span
+              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+            >
+              0+
+            </span> -->
+        </button>
+      </form>
+    </div>
   </div>
+
+  <!-- ======= Small Screen Offcanvas Menu  ======= -->
+  {% include 'partials/offcanvas_links.html' %}
 
   <div>
     <center>
@@ -26,19 +40,32 @@
     </center>
   </div>
 
-  <div class="d-flex justify-content-center mt-5">
-    <a href="{% url 'index' %}">
-      <h6 class="nav_links">HOME</h6>
-    </a>
-    <a href="{% url 'products' %}">
-      <h6 class="nav_links">PRODUCTS</h6>
-    </a>
-    <a href="{% url 'our-reviews'%}">
-      <h6 class="nav_links">REVIEWS</h6>
-    </a>
-    <a href="{% url 'contact-us' %}">
-      <h6 class="nav_links">CONTACT</h6>
-    </a>
+  <div class="d-none d-lg-block">
+    <div class="d-flex justify-content-center mt-5">
+      <a href="{% url 'index' %}">
+        <h6 class="nav_links">HOME</h6>
+      </a>
+      <a href="{% url 'products' %}">
+        <h6 class="nav_links">PRODUCTS</h6>
+      </a>
+      <a href="{% url 'our-reviews'%}">
+        <h6 class="nav_links">REVIEWS</h6>
+      </a>
+      <a href="{% url 'contact-us' %}">
+        <h6 class="nav_links">CONTACT</h6>
+      </a>
+      {% if request.user.is_superuser %}
+      <a href="{% url 'dashboard' %}">
+        <h6 class="nav_links text-uppercase">Dashboard</h6>
+      </a>
+      <a href="{% url 'admin-products' %}">
+        <h6 class="nav_links text-uppercase">admin-Products</h6>
+      </a>
+      <a href="{% url 'logout' %}">
+        <h6 class="nav_links text-uppercase">Log out</h6>
+      </a>
+      {% endif %}
+    </div>
   </div>
 </section>
 

@@ -1,0 +1,26 @@
+<div id="itemList">
+  {% for data in items %}
+  <div class="p-3 form_background rounded-3 mb-3">
+    <div class="row">
+      <div class="col">
+        <h6 class="mb-2 fw-bold">{{data.type}}</h6>
+      </div>
+      <div class="col-2 d-flex justify-content-end">
+        <form method="POST">
+          {% csrf_token %}
+          <input type="text" value="{{data.id}}" name="item_id" hidden />
+          <button
+            type="submit"
+            hx-post="{% url 'remove-session-item' %}"
+            hx-target="#itemList"
+            class="item_btn"
+          >
+            <i class="bi bi-trash3-fill text-danger delete_item"></i>
+          </button>
+        </form>
+      </div>
+    </div>
+    <p class="mb-0">{{data.detailsDescription}}</p>
+  </div>
+  {% endfor %}
+</div>

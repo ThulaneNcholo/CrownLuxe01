@@ -4,14 +4,17 @@ import random
 # Models Import 
 from .models import *
 from cart.models import * 
+from client.models import *
 
 
 # Create your views here.
 def AllProductsView(request):
-    products = ProductModel.objects.all()
-
+    products = ProductModel.objects.all().exclude(product_catalog = 4)
+    accessories = ProductModel.objects.filter(product_catalog = 4)
+    
     context = {
-        "products" : products
+        "products" : products,
+        "accessories" : accessories,
     }
 
     return render(request,'products/products_all.html',context)
@@ -20,6 +23,7 @@ def ProductView(request,id):
     product = ProductModel.objects.get(id = id)
     product_details = product.product_details.all()
     similar_products = ProductModel.objects.all().exclude(id = id).order_by('?')[:3]
+    reviews = ReviewsModel.objects.all().order_by('?')[:3]
 
     # Add to cart
     if request.method == 'POST' and 'add_to_cart' in request.POST:
@@ -39,7 +43,8 @@ def ProductView(request,id):
     context = {
         "product" : product,
         "product_details" : product_details,
-        "similar_products" : similar_products
+        "similar_products" : similar_products,
+        "reviews" : reviews
     }
 
     return render(request,'products/product_view.html',context)

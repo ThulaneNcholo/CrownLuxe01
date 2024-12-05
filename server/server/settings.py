@@ -40,6 +40,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'products',
     'cart',
+    'dashboard',
+    'payments',
+    'account',
 ]
 
 MIDDLEWARE = [
@@ -134,6 +137,15 @@ MEDIA_URL = ''
 STATICFILES_DIRS = [
     BASE_DIR / "static"
 ]
+
+MERCHANT_ID = "10036148"  # Sandbox Merchant ID
+MERCHANT_KEY = "hdcbii4iv1rko"  # Sandbox Merchant Key
+PAY_URL = "https://sandbox.payfast.co.za/eng/process"
+RETURN_URL = "http://127.0.0.1:8000/payment-success/"
+CANCEL_URL = "http://127.0.0.1:8000/payment-cancel/"
+NOTIFY_URL = "http://127.0.0.1:8000/payment-notify/"
+PASSPHRASE = "Vm6Y0PxGlxjQfwJUXcncWg"
+
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/4.2/ref/settings/#default-auto-field

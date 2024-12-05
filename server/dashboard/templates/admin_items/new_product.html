@@ -1,0 +1,381 @@
+{% extends 'client/base.html' %}
+<!-- divider  -->
+{% load static %}
+<!-- divider  -->
+{% block content %}
+<style>
+  .form_background {
+    background-color: #e9ecef;
+  }
+
+  .delete_item {
+    cursor: pointer;
+  }
+
+  .item_btn {
+    border: 0px;
+    background-color: transparent;
+  }
+
+  .admin_product_image {
+    height: 100px;
+    width: 100px;
+    object-fit: cover;
+  }
+</style>
+
+<section class="container my-5">
+  {% for message in messages %}
+  <div class="alert alert-success my-5" role="alert">{{message}}</div>
+  {% endfor %}
+</section>
+
+<section class="container mt-5 mb-4">
+  <a href="{% url 'admin-products' %}">
+    <i class="bi bi-arrow-left-square-fill back_button"></i>
+  </a>
+</section>
+
+<form method="POST" autocomplete="off" enctype="multipart/form-data">
+  {% csrf_token %}
+  <!-- divider  -->
+  {% if product %}
+  <section class="container mt-5">
+    <div class="row d-flex align-items-center">
+      <div class="col-12 mb-3 col-md-6 d-none d-md-block">
+        <h3 class="header_heading">{{product.name}}</h3>
+      </div>
+      <div class="col-12 col-md-6">
+        <div class="row">
+          <div class="col-12 col-md-6 mb-3 d-flex justify-content-end">
+            <button
+              type="submit"
+              name="edit_product"
+              class="btn btn-dark rounded-pill shadow w-100 py-2"
+            >
+              <i
+                class="bi bi-cloud-download-fill"
+                style="margin-right: 10px"
+              ></i>
+              Update Product
+            </button>
+          </div>
+          <div class="col-12 col-md-6 mb-3 d-flex justify-content-end">
+            <button
+              type="submit"
+              name="delete_product"
+              class="btn btn-danger rounded-pill shadow w-100 py-2"
+            >
+              <i class="bi bi-trash3-fill" style="margin-right: 10px"></i>
+              Delete Product
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+  {% else %}
+  <section class="container mt-5">
+    <div class="row d-flex align-items-center">
+      <div class="col">
+        <h3 class="header_heading">New Product</h3>
+      </div>
+      <div class="col d-flex justify-content-end">
+        <button
+          type="submit"
+          name="submit_product"
+          class="btn btn-dark rounded-pill shadow"
+        >
+          <i class="bi bi-cloud-download-fill" style="margin-right: 10px"></i>
+          save product
+        </button>
+      </div>
+    </div>
+  </section>
+  {% endif %}
+
+  <section class="container mt-5">
+    <div class="row">
+      <div class="col-12 col-md-6 mb-5 col-lg-7">
+        <div class="bg-light rounded-3 shadow-sm p-3 h-100">
+          <h5 class="fw-bold mb-3">General Information</h5>
+
+          <div class="mb-3">
+            <label for="productName" class="form-label">Product Name</label>
+            <input
+              type="text"
+              class="form-control shadow-sm py-3 form_background"
+              id="productName"
+              name="productName"
+              value="{{product.name}}"
+              aria-describedby="productNamehelp"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="price" class="form-label">Price</label>
+            <input
+              type="text"
+              class="form-control shadow-sm py-3 form_background"
+              id="price"
+              name="price"
+              value="{{product.price}}"
+              aria-describedby="pricehelp"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="productDescription" class="form-label"
+              >Product Description</label
+            >
+            <textarea
+              class="form-control form_background"
+              id="productDescription"
+              rows="5"
+              name="description"
+            >
+{{product.description}}</textarea
+            >
+          </div>
+        </div>
+      </div>
+      <!-- end col item  -->
+      <div class="col-12 col-md-6 mb-5 col-lg">
+        <div class="bg-light rounded-3 shadow-sm p-3 h-100">
+          <h5 class="fw-bold mb-3">Product Images</h5>
+          <div class="row mb-5 mt-4">
+            {% if product.cover_image %}
+            <div class="col-6 col-md-4 mb-3">
+              <img
+                src="{{product.cover_image.url}}"
+                alt=""
+                class="admin_product_image shadow-sm rounded"
+              />
+            </div>
+            {% endif %}
+            <!-- divider  -->
+            {% if product.image1 %}
+            <div class="col-6 col-md-4 mb-3">
+              <img
+                src="{{product.image1.url}}"
+                alt=""
+                class="admin_product_image shadow-sm rounded"
+              />
+            </div>
+            {% endif %}
+            <!-- divider  -->
+            {% if product.image2 %}
+            <div class="col-6 col-md-4 mb-3">
+              <img
+                src="{{product.image2.url}}"
+                alt=""
+                class="admin_product_image shadow-sm rounded"
+              />
+            </div>
+            {% endif %}
+          </div>
+
+          <div class="input-group mb-3">
+            <label
+              class="input-group-text bg-dark text-white"
+              for="inputGroupFile01"
+              >Cover Image</label
+            >
+            <input
+              type="file"
+              class="form-control py-3 form_background"
+              id="inputGroupFile01"
+              name="coverImage"
+            />
+          </div>
+          <div class="input-group mb-3">
+            <label
+              class="input-group-text bg-dark text-white"
+              for="inputGroupFile01"
+              >Image 2</label
+            >
+            <input
+              type="file"
+              class="form-control py-3 form_background"
+              id="inputGroupFile01"
+              name="image2"
+            />
+          </div>
+          <div class="input-group mb-3">
+            <label
+              class="input-group-text bg-dark text-white"
+              for="inputGroupFile01"
+              >Image 3</label
+            >
+            <input
+              type="file"
+              class="form-control py-3 form_background"
+              id="inputGroupFile01"
+              name="image3"
+            />
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="container mt-5">
+    <div class="row">
+      <div class="col-12 col-md-6 mb-5">
+        <div class="bg-light rounded-3 shadow-sm p-3 h-100">
+          <h5 class="fw-bold mb-3">Category</h5>
+          <p class="mb-4">Please select product category</p>
+          {% for data in catalog %}
+          <!-- divider  -->
+          {% if data.id == product.product_catalog.id %}
+          <div class="mb-3">
+            <input
+              type="radio"
+              class="btn-check"
+              id="catalog{{data.id}}"
+              autocomplete="off"
+              value="{{data.id}}"
+              name="product_catalog"
+              checked
+            />
+            <label
+              class="btn btn-outline-dark rounded-pill"
+              for="catalog{{data.id}}"
+              >{{data.title}} <i class="bi bi-check-circle-fill px-2"></i
+            ></label>
+          </div>
+          {% else %}
+          <div class="mb-3">
+            <input
+              type="radio"
+              class="btn-check"
+              id="catalog{{data.id}}"
+              autocomplete="off"
+              value="{{data.id}}"
+              name="product_catalog"
+            />
+            <label
+              class="btn btn-outline-dark rounded-pill"
+              for="catalog{{data.id}}"
+              >{{data.title}}</label
+            >
+          </div>
+          {% endif %}
+          <!-- divider  -->
+          {% endfor %}
+        </div>
+      </div>
+      <div class="col-12 col-md-6 mb-5">
+        <div class="bg-light rounded-3 shadow-sm p-3 h-100">
+          <div class="row d-flex align-items-center mb-4">
+            <div class="col">
+              <h5 class="fw-bold mb-0">Best Selling</h5>
+            </div>
+            {% if product.best_sellers %}
+            <div class="col d-flex justify-content-end">
+              <button class="btn btn-success rounded-pill px-5">
+                {{product.best_sellers}}
+              </button>
+            </div>
+            {% endif %}
+          </div>
+
+          <p>Select if product should be added to best sellers products</p>
+          <div class="row">
+            <div class="col">
+              <div class="mb-3">
+                <input
+                  type="radio"
+                  class="btn-check"
+                  id="bestNo"
+                  autocomplete="off"
+                  value="False"
+                  name="bestSellers"
+                />
+                <label
+                  class="btn btn-outline-dark rounded-pill w-100"
+                  for="bestNo"
+                  >No</label
+                >
+              </div>
+            </div>
+            <div class="col">
+              <div class="mb-3">
+                <input
+                  type="radio"
+                  class="btn-check"
+                  id="bestYes"
+                  autocomplete="off"
+                  value="True"
+                  name="bestSellers"
+                />
+                <label
+                  class="btn btn-outline-dark rounded-pill w-100"
+                  for="bestYes"
+                  >Yes</label
+                >
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+</form>
+
+<section class="container mt-5">
+  <div class="row">
+    <div class="col-12 col-md-6 col-lg-4">
+      <div class="bg-light rounded-3 shadow-sm p-3 h-100">
+        <h5 class="fw-bold mb-3">Product Details</h5>
+        <form
+          method="POST"
+          hx-post="{% url 'create-details' %}"
+          hx-target="#productDetails"
+          hx-trigger="submit"
+          hx-on="htmx:afterRequest: document.querySelector('#detailsForm').reset();"
+          id="detailsForm"
+        >
+          {% csrf_token %}
+          <div class="mb-3">
+            <label for="detailsName" class="form-label">Name</label>
+            <input
+              type="text"
+              class="form-control shadow-sm py-3 form_background"
+              id="detailsName"
+              placeholder="Hair type"
+              name="type"
+              aria-describedby="detailsNamehelp"
+            />
+          </div>
+          <div class="mb-3">
+            <label for="typeDescription" class="form-label">Description</label>
+            <textarea
+              class="form-control form_background"
+              id="typeDescription"
+              rows="5"
+              name="detailsDescription"
+              placeholder="100% Virgin Brazilian Human Hair, known for its natural luster and durability."
+            ></textarea>
+          </div>
+          <button
+            type="submit"
+            class="btn btn-dark rounded-pill w-100 my-3 py-2 fw-bold"
+          >
+            Save
+          </button>
+        </form>
+
+        <hr class="my-3" />
+
+        <!-- details list  -->
+        <div id="productDetails">
+          {% include 'partials/product_partial.html' %}
+        </div>
+        <div class="amdin_product_details">
+          {% include 'partials/admin_product_partial.html' %}
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+{% endblock %}

@@ -35,8 +35,6 @@ def IndexView(request):
 
     return render(request,'client/index.html',context)
 
-def AboutView(request):
-    return render(request,'client/about.html')
 
 def ContactUsView(request):
     return render(request,'client/contact.html')

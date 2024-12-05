@@ -97,6 +97,7 @@
   <div class="row">
     <div class="col-12 col-md-6">
       <div class="row">
+        {% if product.image1 %}
         <div class="col-6">
           <img
             src="{{product.image1.url}}"
@@ -104,7 +105,9 @@
             class="sub_images shadow-sm border-2 border-dark border"
           />
         </div>
+        {% endif %}
         <!-- end col item  -->
+        {% if product.image2 %}
         <div class="col-6">
           <img
             src="{{product.image2.url}}"
@@ -112,78 +115,34 @@
             class="sub_images shadow-sm"
           />
         </div>
+        {% endif %}
         <!-- end col item  -->
       </div>
     </div>
   </div>
 </section>
 
-<!-- ======= Reviews ======= -->
-<section class="container section_spacing">
+<!-- ======= All Reviews ======= -->
+<section class="container section_spacing mt-5">
   <div class="row">
+    {% for data in reviews %}
     <div class="col-12 col-md-4 mb-5">
       <div class="bg-light p-4 shadow-sm">
         <div class="d-flex justify-content-center mb-3">
-          <i class="bi bi-star-fill rating_star"></i>
-          <i class="bi bi-star-fill rating_star"></i>
-          <i class="bi bi-star-fill rating_star"></i>
-          <i class="bi bi-star-fill rating_star"></i>
-          <i class="bi bi-star-fill rating_star"></i>
+          <i class="bi bi-star-fill rating_star text-warning"></i>
+          <i class="bi bi-star-fill rating_star text-warning"></i>
+          <i class="bi bi-star-fill rating_star text-warning"></i>
+          <i class="bi bi-star-fill rating_star text-warning"></i>
+          <i class="bi bi-star-fill rating_star text-warning"></i>
         </div>
 
         <center>
-          <p class="mb-3">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed id
-            numquam porro et atque itaque earum perspiciatis alias. Enim,
-            nesciunt?
-          </p>
-          <h5 class="fw-bold">Lorem, ipsum.</h5>
+          <p class="mb-3">{{data.Review}}</p>
+          <h5 class="fw-bold">{{data.FirstName}} {{data.LastName}}</h5>
         </center>
       </div>
     </div>
-    <!-- end col item  -->
-    <div class="col-12 col-md-4 mb-5">
-      <div class="bg-light p-4 shadow-sm">
-        <div class="d-flex justify-content-center mb-3">
-          <i class="bi bi-star-fill rating_star"></i>
-          <i class="bi bi-star-fill rating_star"></i>
-          <i class="bi bi-star-fill rating_star"></i>
-          <i class="bi bi-star-fill rating_star"></i>
-          <i class="bi bi-star-fill rating_star"></i>
-        </div>
-
-        <center>
-          <p class="mb-3">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed id
-            numquam porro et atque itaque earum perspiciatis alias. Enim,
-            nesciunt?
-          </p>
-          <h5 class="fw-bold">Lorem, ipsum.</h5>
-        </center>
-      </div>
-    </div>
-    <!-- end col item  -->
-    <div class="col-12 col-md-4 mb-5">
-      <div class="bg-light p-4 shadow-sm">
-        <div class="d-flex justify-content-center mb-3">
-          <i class="bi bi-star-fill rating_star"></i>
-          <i class="bi bi-star-fill rating_star"></i>
-          <i class="bi bi-star-fill rating_star"></i>
-          <i class="bi bi-star-fill rating_star"></i>
-          <i class="bi bi-star-fill rating_star"></i>
-        </div>
-
-        <center>
-          <p class="mb-3">
-            Lorem ipsum dolor sit amet consectetur adipisicing elit. Sed id
-            numquam porro et atque itaque earum perspiciatis alias. Enim,
-            nesciunt?
-          </p>
-          <h5 class="fw-bold">Lorem, ipsum.</h5>
-        </center>
-      </div>
-    </div>
-    <!-- end col item  -->
+    {% endfor%}
   </div>
 </section>
 

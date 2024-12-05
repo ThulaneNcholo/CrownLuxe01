@@ -1,0 +1,121 @@
+{% extends 'client/base.html' %}
+<!-- divider  -->
+{% load static %}
+<!-- divider  -->
+{% block content %}
+<style>
+  .spinner_card {
+    height: 30vh;
+    width: 100%;
+  }
+
+  #payment_spinner {
+    display: none;
+  }
+</style>
+
+<section
+  id="payment_content"
+  class="container mt-5"
+  style="margin-bottom: 100px"
+>
+  <div class="row">
+    <div class="col-12 col-md-6">
+      <div>
+        <ul class="list-group">
+          {% for data in customer_order.customer_items.all %}
+          <li class="list-group-item py-3">
+            <div class="row">
+              <div class="col-12 mb-3">
+                <p class="mb-0">{{data.product.name}}</p>
+              </div>
+              <div class="col-12 mb-3 col-md-2">
+                <p class="mb-0">
+                  <span class="fw-bold">{{data.quantity}}</span> Qty
+                </p>
+              </div>
+              <div class="col-12 mb-3 col-md-2 d-flex justify-content-end">
+                <p class="mb-0 fw-bold">R{{data.product.price}}</p>
+              </div>
+            </div>
+          </li>
+          {% endfor %}
+
+          <li class="list-group-item bg-dark py-3">
+            <div class="row">
+              <div class="col">
+                <p class="mb-0 text-light">TOTAL</p>
+              </div>
+              <div class="col d-flex justify-content-end">
+                <p class="mb-0 text-light fw-bold">R{{customer_order.total}}</p>
+              </div>
+            </div>
+          </li>
+          <li class="list-group-item bg-light py-3">
+            <form action="{{ merchant_url }}" method="post">
+              <input
+                type="hidden"
+                name="merchant_id"
+                value="{{ merchant_id }}"
+              />
+              <input
+                type="hidden"
+                name="merchant_key"
+                value="{{ merchant_key }}"
+              />
+              <input
+                type="hidden"
+                name="return_url"
+                value="{{ pfData.return_url }}"
+              />
+              <input
+                type="hidden"
+                name="notify_url"
+                value="{{ pfData.notify_url }}"
+              />
+              <input
+                type="hidden"
+                name="m_payment_id"
+                value="{{ pfData.m_payment_id }}"
+              />
+              <input type="hidden" name="amount" value="{{ pfData.amount }}" />
+              <input
+                type="hidden"
+                name="item_name"
+                value="{{ pfData.item_name }}"
+              />
+              <input type="hidden" name="signature" value="{{ signature }}" />
+              <center>
+                <input
+                  class="btn btn-success rounded-0 px-5"
+                  type="submit"
+                  onclick="myFunction()"
+                />
+              </center>
+            </form>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </div>
+</section>
+
+<section
+  class="container d-flex justify-content-center align-items-center spinner_card"
+>
+  <div class="spinner-grow spinner_icon" role="status" id="payment_spinner">
+    <span class="visually-hidden">Loading...</span>
+  </div>
+</section>
+
+<script>
+  function myFunction() {
+    const payment_content = document.getElementById("payment_content");
+    const payment_spinner = document.getElementById("payment_spinner");
+
+    payment_content.style.display = "none";
+    payment_spinner.style.display = "block"; // Hide spinner
+  }
+</script>
+
+{% endblock %}

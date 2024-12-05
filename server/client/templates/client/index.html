@@ -155,16 +155,16 @@
       data-aos-delay="50"
       data-aos-duration="1000"
     >
-      <div
-        class="catalog_image d-flex justify-content-center align-items-end shadow"
-        style="background-image: linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.2)), url({{data.catalog_image.url}});"
-      >
-        <a href="{% url 'catalog-list' data.id %}">
+      <a href="{% url 'catalog-list' data.id %}">
+        <div
+          class="catalog_image d-flex justify-content-center align-items-end shadow"
+          style="background-image: linear-gradient(rgba(0, 0, 0, 0.2),rgba(0, 0, 0, 0.2)), url({{data.catalog_image.url}});"
+        >
           <button class="btn btn-light rounded-0 px-5 mb-3">
             {{data.title}}
           </button>
-        </a>
-      </div>
+        </div>
+      </a>
     </div>
     {% endfor %}
     <!-- end item  -->
@@ -614,7 +614,9 @@
         data-aos-delay="50"
         data-aos-duration="1000"
       >
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Id, magnam.
+        Discover our exclusive collection, designed for those who seek something
+        extraordinary. Available for a limited time only, these premium pieces
+        won’t last long—grab yours before they're gone!
       </p>
       <a href="{% url 'products' %}">
         <button
@@ -649,8 +651,8 @@
         data-aos-delay="50"
         data-aos-duration="1000"
       >
-        Lorem ipsum dolor sit amet consectetur adipisicing elit. Dolorum,
-        inventore.
+        Stay connected and never miss out on our latest updates, offers, and
+        exclusive releases. We’d love to keep you in the loop!
       </p>
     </div>
   </center>

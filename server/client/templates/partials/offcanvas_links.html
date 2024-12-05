@@ -1,0 +1,66 @@
+<style>
+  .offcanvas-bottom {
+    height: 90vh;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
+  }
+
+  .header_heading {
+    font-family: var(--heading-font);
+  }
+</style>
+
+<div
+  class="offcanvas offcanvas-bottom"
+  tabindex="-1"
+  id="offcanvasExample"
+  aria-labelledby="offcanvasExampleLabel"
+>
+  <div class="offcanvas-header">
+    <h5
+      class="offcanvas-title header_heading fw-bold"
+      id="offcanvasExampleLabel"
+    >
+      Crown Luxe
+    </h5>
+    <button
+      type="button"
+      class="btn-close text-reset"
+      data-bs-dismiss="offcanvas"
+      aria-label="Close"
+    ></button>
+  </div>
+  <div class="offcanvas-body">
+    <div class="mt-5">
+      <center>
+        <a href="{% url 'index' %}">
+          <h4 class="nav_links header_heading mb-4">HOME</h4>
+        </a>
+        <a href="{% url 'products' %}">
+          <h4 class="nav_links header_heading mb-4">PRODUCTS</h4>
+        </a>
+        <a href="{% url 'our-reviews'%}">
+          <h4 class="nav_links header_heading mb-4">REVIEWS</h4>
+        </a>
+        <a href="{% url 'contact-us' %}">
+          <h4 class="nav_links header_heading mb-4">CONTACT</h4>
+        </a>
+        {% if request.user.is_superuser %}
+        <a href="{% url 'dashboard' %}">
+          <h4 class="nav_links header_heading mb-4 text-uppercase">
+            Dashboard
+          </h4>
+        </a>
+        <a href="{% url 'admin-products' %}">
+          <h4 class="nav_links header_heading mb-4 text-uppercase">
+            admin-Products
+          </h4>
+        </a>
+        <a href="{% url 'logout' %}">
+          <h4 class="nav_links header_heading mb-4 text-uppercase">Log out</h4>
+        </a>
+        {% endif %}
+      </center>
+    </div>
+  </div>
+</div>
